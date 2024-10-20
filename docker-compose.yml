@@ -1,0 +1,18 @@
+services:
+  db:
+    container_name: pasonaldb
+    build:
+      context: ./databases
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 'exemples'
+      POSTGRES_USER: 'user'
+      POSTGRES_DB: 'developer'
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
