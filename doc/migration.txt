@@ -1,0 +1,1 @@
+npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate migration/user -d data-source.ts

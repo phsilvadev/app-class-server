@@ -11,20 +11,28 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const auth_module_1 = require("./auth/auth.module");
-const users_module_1 = require("./users/users.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const data_source_1 = require("../data-source");
+const config_1 = require("@nestjs/config");
+const user_module_1 = require("./user/user.module");
+const role_module_1 = require("./role/role.module");
+const terms_of_use_module_1 = require("./terms-of-use/terms-of-use.module");
+const user_terms_of_use_module_1 = require("./user-terms-of-use/user-terms-of-use.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot(),
             typeorm_1.TypeOrmModule.forRoot({
                 ...data_source_1.AppDataSource.options,
             }),
             auth_module_1.AuthModule,
-            users_module_1.UsersModule,
+            user_module_1.UserModule,
+            role_module_1.RoleModule,
+            terms_of_use_module_1.TermsOfUseModule,
+            user_terms_of_use_module_1.UserTermsOfUseModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

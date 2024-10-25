@@ -1,6 +1,13 @@
 import { AuthService } from './auth.service';
+import { SingInAuthDto } from './dto/sing-in-auth.dto';
+import { SingUpAuthDto } from './dto/sing-up-auth.dto';
 export declare class AuthController {
-    private authService;
+    private readonly authService;
     constructor(authService: AuthService);
-    login(param: any): void;
+    singIn(singInDto: SingInAuthDto): Promise<{
+        access_token: string;
+        refresh_token: string;
+    }>;
+    singInCompany(singUpAuthDto: SingUpAuthDto): void;
+    findUser(req: any): Promise<import("../user/entities/user").User>;
 }
