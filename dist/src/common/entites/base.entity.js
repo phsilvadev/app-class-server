@@ -19,11 +19,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Base.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'uuid', default: () => 'uuid_generate_v4()' }),
+    __metadata("design:type", String)
+], Base.prototype, "uuid", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({ type: 'timestamptz' }),
     __metadata("design:type", Date)
 ], Base.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.UpdateDateColumn)({ type: 'timestamptz' }),
     __metadata("design:type", Date)
 ], Base.prototype, "updatedAt", void 0);
 //# sourceMappingURL=base.entity.js.map

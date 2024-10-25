@@ -1,0 +1,49 @@
+Solução:
+Habilitar a extensão uuid-ossp no PostgreSQL:
+
+Execute este comando no seu banco de dados para habilitar a extensão responsável por gerar UUIDs:
+
+sql
+Copiar código
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+Isso deve ser executado uma única vez. Pode ser feito diretamente no banco de dados via ferramentas como pgAdmin ou qualquer cliente SQL que você utilize, ou diretamente via um script de migração.
+
+Atualizar a configuração dos campos de data createdAt e updatedAt:
+
+Para os campos de data createdAt e updatedAt, você deve usar os decorators corretos que o TypeORM fornece, como @CreateDateColumn e @UpdateDateColumn. Eles automaticamente preencherão as datas na criação e na atualização.
+
+Código corrigido:
+
+Aqui está o código corrigido, utilizando @CreateDateColumn e @UpdateDateColumn, e com o campo uuid configurado corretamente:
+
+typescript
+Copiar código
+import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
+export class Base {
+@PrimaryGeneratedColumn()
+id?: number;
+
+@Column({ type: 'uuid', default: () => 'uuid_generate_v4()' })
+uuid?: string;
+
+@CreateDateColumn({ type: 'timestamptz' }) // Preenche automaticamente na criação
+createdAt?: Date;
+
+@UpdateDateColumn({ type: 'timestamptz' }) // Atualiza automaticamente a cada modificação
+updatedAt?: Date;
+}
+Verifique se a extensão foi ativada corretamente:
+
+Após executar o comando para habilitar a extensão uuid-ossp, verifique se a função está disponível executando o seguinte comando:
+
+sql
+Copiar código
+SELECT uuid_generate_v4();
+Se retornar um UUID, a extensão foi habilitada com sucesso.
+
+Resumo:
+Execute o comando SQL para habilitar a extensão uuid-ossp.
+Utilize os decorators @CreateDateColumn e @UpdateDateColumn para os campos de data.
+Garanta que a função uuid_generate_v4() está disponível após habilitar a extensão.
+Se o banco de dados for reinicializado, a extensão precisará ser habilitada novamente caso ainda não tenha sido persistida.

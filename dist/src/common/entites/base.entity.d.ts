@@ -1,5 +1,6 @@
 export declare class Base {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
+    id?: number;
+    uuid?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

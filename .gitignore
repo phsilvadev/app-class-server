@@ -2,7 +2,7 @@ packages/*/package-lock.json
 
 # dependencies
 node_modules/
-
+dist/
 # IDE
 /.idea
 /.awcache
@@ -50,3 +50,5 @@ build/config\.gypi
 
 .npmrc
 pnpm-lock.yaml
+node_modules
+node_modules

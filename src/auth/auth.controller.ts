@@ -1,28 +1,38 @@
 import {
   Body,
   Controller,
-  Post,
   HttpCode,
   HttpStatus,
-  Get,
-  Render,
+  Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { SingInAuthDto } from './dto/sing-in-auth.dto';
+import { SingUpAuthDto } from './dto/sing-up-auth.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
-
-  // @HttpCode(HttpStatus.OK)
-  // @Get('login')
-  // @Render('login')
-  // login() {
-  //   return { layout: 'empty-layout', message: 'Login' };
-  //   // return this.authService.signIn(signInDto.username, signInDto.password);
-  // }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  login(@Body() param: any) {
-    console.log(param);
+  singIn(@Body() singInDto: SingInAuthDto) {
+    return this.authService.singIn(singInDto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('register')
+  singInCompany(@Body() singUpAuthDto: SingUpAuthDto) {
+    return this.authService.singUp(singUpAuthDto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  @Post('perfil')
+  findUser(@Request() req) {
+    const user = req.user;
+
+    return this.authService.perfil(user);
   }
 }
