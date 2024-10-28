@@ -3,6 +3,7 @@ import { TermsOfUse } from 'src/terms-of-use/entities/terms-of-use.entity';
 import { UserTermsOfUse } from 'src/user-terms-of-use/entities/user-terms-of-use.entity';
 import { User } from 'src/user/entities/user';
 import { DataSource } from 'typeorm';
+import * as path from 'fs';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -12,6 +13,6 @@ export const AppDataSource = new DataSource({
   password: 'exemples',
   database: 'developer',
   entities: [User, Role, UserTermsOfUse, TermsOfUse],
-  migrations: [__dirname + './databases/migrations/*{.ts,.js}'],
-  synchronize: true, // Desative em produção
+  migrations: [__dirname + 'migrations/*{.ts,.js}'],
+  synchronize: false, // Desative em produção
 });

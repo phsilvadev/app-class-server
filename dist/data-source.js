@@ -6,6 +6,9 @@ const terms_of_use_entity_1 = require("./src/terms-of-use/entities/terms-of-use.
 const user_terms_of_use_entity_1 = require("./src/user-terms-of-use/entities/user-terms-of-use.entity");
 const user_1 = require("./src/user/entities/user");
 const typeorm_1 = require("typeorm");
+const path = require("fs");
+console.log(__dirname + './migrations/*{.ts,.js}');
+console.log(path.join(__dirname));
 exports.AppDataSource = new typeorm_1.DataSource({
     type: 'postgres',
     host: 'localhost',
@@ -14,7 +17,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     password: 'exemples',
     database: 'developer',
     entities: [user_1.User, role_entity_1.Role, user_terms_of_use_entity_1.UserTermsOfUse, terms_of_use_entity_1.TermsOfUse],
-    migrations: [__dirname + './databases/migrations/*{.ts,.js}'],
-    synchronize: true,
+    migrations: [__dirname + 'migrations/*{.ts,.js}'],
+    synchronize: false,
 });
 //# sourceMappingURL=data-source.js.map
