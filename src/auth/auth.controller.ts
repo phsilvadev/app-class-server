@@ -16,6 +16,7 @@ import { AuthGuard } from '../common/guards/auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   singIn(@Body() singInDto: SingInAuthDto) {
     return this.authService.singIn(singInDto);

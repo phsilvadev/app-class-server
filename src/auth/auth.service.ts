@@ -19,10 +19,12 @@ export class AuthService {
   ) {}
 
   async singIn(singInDto: SingInAuthDto) {
+    console.log(singInDto);
+
     const user = await this.userService.findOneEmail(singInDto.email);
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario ou senha incorreto');
     }
 
     const has = await bcrypt.compare(singInDto.password, user.password);

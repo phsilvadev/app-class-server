@@ -5,6 +5,7 @@ import { User } from 'src/user/entities/user';
 import { DataSource } from 'typeorm';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as path from 'path';
+import { Cref } from 'src/user/entities/cref';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
   username: 'user',
   password: 'exemples',
   database: 'developer',
-  entities: [User, Role, UserTermsOfUse, TermsOfUse],
+  entities: [User, Role, UserTermsOfUse, TermsOfUse, Cref],
   migrations: [path.join(__dirname, 'migrations', '*.js')],
-  synchronize: false, // Desative em produção
+  synchronize: true, // Desative em produção
 });
