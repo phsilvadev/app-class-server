@@ -8,10 +8,11 @@ import { User } from './entities/user';
 import { RoleModule } from 'src/role/role.module';
 import { UserTermsOfUseModule } from 'src/user-terms-of-use/user-terms-of-use.module';
 import { TermsOfUseModule } from 'src/terms-of-use/terms-of-use.module';
+import { Cref } from './entities/cref';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Cref]),
     RoleModule,
     UserTermsOfUseModule,
     TermsOfUseModule,

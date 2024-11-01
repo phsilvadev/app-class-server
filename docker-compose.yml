@@ -2,7 +2,7 @@ services:
   db:
     container_name: pasonaldb
     build:
-      context: ./databases
+      context: ./db
       dockerfile: Dockerfile
     restart: always
     environment:

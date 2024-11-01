@@ -11,12 +11,16 @@ import * as bcrypt from 'bcrypt';
 import { RoleService } from '../role/role.service';
 import { UserTermsOfUseService } from 'src/user-terms-of-use/user-terms-of-use.service';
 import { TermsOfUseService } from 'src/terms-of-use/terms-of-use.service';
+import { Cref } from './entities/cref';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Cref)
+    private crefRepository: Repository<Cref>,
+
     private roleService: RoleService,
     private userTermsOfUseService: UserTermsOfUseService,
     private termsOfUseService: TermsOfUseService,
@@ -35,7 +39,7 @@ export class UserService {
     }
 
     const group = await this.roleService.findOneName(
-      singUpAuthDto.cip ? 'teacher' : 'user',
+      singUpAuthDto.cref ? 'teacher' : 'user',
     );
 
     try {
@@ -44,7 +48,6 @@ export class UserService {
         email: singUpAuthDto.email,
         password: await bcrypt.hash(singUpAuthDto.password, 10),
         role: group,
-        cip: singUpAuthDto.cip,
       };
       const userSaver = await this.userRepository.save(user);
       const terms = await this.termsOfUseService.findLast();
@@ -53,6 +56,15 @@ export class UserService {
         terms_of_use_id: terms.id,
         userId: userSaver.id,
       });
+
+      if (singUpAuthDto.cref) {
+        const cref: Cref = {
+          cref: singUpAuthDto.cref,
+          user: userSaver,
+        };
+
+        this.crefRepository.save(cref);
+      }
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('');

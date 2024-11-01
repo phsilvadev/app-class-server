@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -25,9 +26,9 @@ export class UserTermsOfUse {
 
   @JoinColumn({ name: 'userId' })
   @OneToMany(() => User, (key) => key.userTermsOfUse)
-  user?: User;
+  user?: User[];
 
   @JoinColumn({ name: 'terms_of_use_id' })
-  @OneToMany(() => TermsOfUse, (key) => key.userTermsOfUse)
+  @ManyToOne(() => TermsOfUse, (termsOfUse) => termsOfUse.userTermsOfUse)
   termsOfUse?: TermsOfUse;
 }

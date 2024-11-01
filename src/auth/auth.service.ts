@@ -19,10 +19,12 @@ export class AuthService {
   ) {}
 
   async singIn(singInDto: SingInAuthDto) {
+    console.log(singInDto);
+
     const user = await this.userService.findOneEmail(singInDto.email);
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario ou senha incorreto');
     }
 
     const has = await bcrypt.compare(singInDto.password, user.password);
@@ -36,6 +38,9 @@ export class AuthService {
     };
 
     return {
+      name: user.name,
+      email: user.email,
+      role: user.role.name ? user.role.name : 'user',
       access_token: this.gerarToken(payload).access_token,
       refresh_token: this.gerarToken(payload).refresh_token,
     };
